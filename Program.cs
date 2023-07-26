@@ -2,9 +2,11 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsoleTest
 {
+    // 클라이언트 흐름: Socket 객체 생성 -> Connect()를 통해 서버에 설정된 IP, PORT로 연결 시도 -> 비동기로 메세지를 수신하는 로직을 다른 스레드에 맡김 -> 반복문을 통해서 채팅을 입력하면 내용을 서버로 전송 -> 무한 반복
     class Program
     {
         static void Main(string[] args)
@@ -27,7 +29,11 @@ namespace ConsoleTest
                 string GetMessage = null;
 
                 // 비동기적으로 입력을 처리하도록 변경
-                Console.WriteLine("메시지를 입력하세요 (exit를 입력하여 종료):");
+                Console.WriteLine("닉네임을 입력해주세요:");
+
+                // 서버로부터 메시지를 받는 스레드 별도로 시작
+                Task.Run(() => ReceiveMessages(SR));
+                
 
                 while (true)
                 {
@@ -41,14 +47,6 @@ namespace ConsoleTest
                         SW.WriteLine(SendMessage);
                         SW.Flush();
                     }
-
-                    // 서버로부터 메시지를 받아오기
-                    if (NS.DataAvailable)
-                    {
-                        GetMessage = SR.ReadLine();
-                        //Console.WriteLine("서버로부터 메세지 전달받음");
-                        Console.WriteLine(GetMessage);
-                    }
                 }
             }
             catch (Exception e)
@@ -60,6 +58,26 @@ namespace ConsoleTest
                 if (SW != null) SW.Close();
                 if (SR != null) SR.Close();
                 if (client != null) client.Close();
+            }
+        }
+
+        // 서버로부터 메시지를 받는 메서드
+        static void ReceiveMessages(StreamReader reader)
+        {
+            try
+            {
+                while (true)
+                {
+                    string message = reader.ReadLine();
+                    if (message == null)
+                        break;
+
+                    Console.WriteLine(message);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }

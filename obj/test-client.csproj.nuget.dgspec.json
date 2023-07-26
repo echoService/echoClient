@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/aaron/Desktop/test-client/test-client.csproj": {}
+    "/Users/declan/Desktop/MyFile/client/test-client.csproj": {}
   },
   "projects": {
-    "/Users/aaron/Desktop/test-client/test-client.csproj": {
+    "/Users/declan/Desktop/MyFile/client/test-client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/aaron/Desktop/test-client/test-client.csproj",
+        "projectUniqueName": "/Users/declan/Desktop/MyFile/client/test-client.csproj",
         "projectName": "test-client",
-        "projectPath": "/Users/aaron/Desktop/test-client/test-client.csproj",
-        "packagesPath": "/Users/aaron/.nuget/packages/",
-        "outputPath": "/Users/aaron/Desktop/test-client/obj/",
+        "projectPath": "/Users/declan/Desktop/MyFile/client/test-client.csproj",
+        "packagesPath": "/Users/declan/.nuget/packages/",
+        "outputPath": "/Users/declan/Desktop/MyFile/client/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/aaron/.nuget/NuGet/NuGet.Config"
+          "/Users/declan/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"

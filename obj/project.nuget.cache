@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "B7rhdL+SqyDhz83/j0SHFVxYpgfDD+qAPMPXmnIuxMhaefMtBJKOTiY6DFIF1+JjAv4CHLPfJjJyTKVRXwp5Vw==",
+  "dgSpecHash": "3Eixyv/YcXfXsj/gXWKvbRfEapa6FU1W76CyHvvh3r4XzcZepwlT91ShixqQt3BV5tzHX0AGIQHxvZdT0GVaiA==",
   "success": true,
-  "projectFilePath": "/Users/aaron/Desktop/test-client/test-client.csproj",
+  "projectFilePath": "/Users/declan/Desktop/MyFile/client/test-client.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
