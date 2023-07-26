@@ -6,47 +6,48 @@ using System.Threading.Tasks;
 
 namespace ConsoleTest
 {
-    // 클라이언트 흐름: Socket 객체 생성 -> Connect()를 통해 서버에 설정된 IP, PORT로 연결 시도 -> 비동기로 메세지를 수신하는 로직을 다른 스레드에 맡김 -> 반복문을 통해서 채팅을 입력하면 내용을 서버로 전송 -> 무한 반복
     class Program
     {
         static void Main(string[] args)
         {
-            NetworkStream NS = null;
-            StreamReader SR = null;
-            StreamWriter SW = null;
             Socket client = null;
+            Task receiveTask = null;
 
             try
             {
+                // 클라이언트 Socket 생성
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                // 서버에 접속 시도
                 client.Connect("localhost", 5555);
                 Console.WriteLine("연결 성공!");
-                NS = new NetworkStream(client);
-                SR = new StreamReader(NS, Encoding.UTF8);
-                SW = new StreamWriter(NS, Encoding.UTF8);
+
+                // 데이터 송수신에 필요한 버퍼 생성
+                var buffer = new Memory<byte>(new byte[1024]);
 
                 string SendMessage = null;
-                string GetMessage = null;
 
-                // 비동기적으로 입력을 처리하도록 변경
+                // 스트림에 처음 전달하는 문자열이 닉네임이 될 수 있도록 안내
                 Console.WriteLine("닉네임을 입력해주세요:");
 
-                // 서버로부터 메시지를 받는 스레드 별도로 시작
-                Task.Run(() => ReceiveMessages(SR));
-                
+                // 서버로부터 메시지를 받는 비동기 메서드 호출
+                receiveTask = ReceiveMessages(client, buffer);
 
                 while (true)
                 {
-                    // 사용자 입력이 있는지 확인
-                    if (Console.KeyAvailable)
+                    SendMessage = Console.ReadLine();
+                    if (SendMessage == "exit")
                     {
-                        SendMessage = Console.ReadLine();
-                        if (SendMessage == "exit")
-                            break;
-
-                        SW.WriteLine(SendMessage);
-                        SW.Flush();
+                        break;
                     }
+
+                    if (SendMessage == "")
+                    {
+                        continue;
+                    }
+
+                    // 문자열을 바이트로 인코딩하여 보내기
+                    byte[] sendBytes = Encoding.UTF8.GetBytes(SendMessage);
+                    client.Send(sendBytes);
                 }
             }
             catch (Exception e)
@@ -55,23 +56,26 @@ namespace ConsoleTest
             }
             finally
             {
-                if (SW != null) SW.Close();
-                if (SR != null) SR.Close();
+                // 연결 종료 및 비동기 메시지 수신 메서드 완료 대기
                 if (client != null) client.Close();
+                if (receiveTask != null) receiveTask.Wait();
             }
         }
 
-        // 서버로부터 메시지를 받는 메서드
-        static void ReceiveMessages(StreamReader reader)
+        // 서버로부터 메시지를 받는 비동기 메서드
+        static async Task ReceiveMessages(Socket client, Memory<byte> buffer)
         {
             try
             {
                 while (true)
                 {
-                    string message = reader.ReadLine();
-                    if (message == null)
+                    // 서버로부터 비동기적으로 바이트 데이터를 받음
+                    int receivedBytes = await client.ReceiveAsync(buffer, SocketFlags.None);
+                    if (receivedBytes == 0)
                         break;
 
+                    // 바이트 데이터를 문자열로 디코딩하여 콘솔에 표시
+                    string message = Encoding.UTF8.GetString(buffer.Span.Slice(0, receivedBytes));
                     Console.WriteLine(message);
                 }
             }
