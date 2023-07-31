@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/declan/Desktop/MyFile/client/test-client.csproj",
+      "projectUniqueName": "/Users/declan/Desktop/깃허브 업로드용/client/test-client.csproj",
       "projectName": "test-client",
-      "projectPath": "/Users/declan/Desktop/MyFile/client/test-client.csproj",
+      "projectPath": "/Users/declan/Desktop/깃허브 업로드용/client/test-client.csproj",
       "packagesPath": "/Users/declan/.nuget/packages/",
-      "outputPath": "/Users/declan/Desktop/MyFile/client/obj/",
+      "outputPath": "/Users/declan/Desktop/깃허브 업로드용/client/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/declan/.nuget/NuGet/NuGet.Config"
