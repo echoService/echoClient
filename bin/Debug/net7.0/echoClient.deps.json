@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v7.0": {
-      "test-client/1.0.0": {
+      "echoClient/1.0.0": {
         "runtime": {
-          "test-client.dll": {}
+          "echoClient.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "test-client/1.0.0": {
+    "echoClient/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

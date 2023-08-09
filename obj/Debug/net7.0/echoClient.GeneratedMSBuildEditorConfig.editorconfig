@@ -7,5 +7,5 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-build_property.RootNamespace = test_client
-build_property.ProjectDir = /Users/declan/Desktop/깃허브 업로드용/client/
+build_property.RootNamespace = echoClient
+build_property.ProjectDir = /Users/declan/Desktop/echoService/echo/echoClient/
